@@ -73,37 +73,37 @@ namespace SillyVM
 
             public static void Register(VirtualMachine Machine)
             {
-                Machine.RegisterFunction("GT",  new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.INT | ArgumentType.DOUBLE | ArgumentType.STRING, ArgumentType.INT | ArgumentType.DOUBLE | ArgumentType.STRING}, (VirtualMachine VM, Value[] Args) => {
+                Machine.RegisterFunction("GT",  new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.COMPARABLE, ArgumentType.COMPARABLE}, (VirtualMachine VM, Value[] Args) => {
                             var c = cmp(Args[1], Args[2]);
 
                             Args[0].Register.Contents = c.gt;
                             }));
 
-                Machine.RegisterFunction("GTE", new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.INT | ArgumentType.DOUBLE | ArgumentType.STRING, ArgumentType.INT | ArgumentType.DOUBLE | ArgumentType.STRING }, (VirtualMachine VM, Value[] Args) => {
-                        var c = cmp(Args[1], Args[2]);
+                Machine.RegisterFunction("GTE",  new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.COMPARABLE, ArgumentType.COMPARABLE}, (VirtualMachine VM, Value[] Args) => {
+                            var c = cmp(Args[1], Args[2]);
 
-                        Args[0].Register.Contents = c.gt || c.eq;
-                        }));
+                            Args[0].Register.Contents = c.gt || c.eq;
+                            }));
 
-                Machine.RegisterFunction("LT", new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.INT | ArgumentType.DOUBLE | ArgumentType.STRING, ArgumentType.INT | ArgumentType.DOUBLE | ArgumentType.STRING }, (VirtualMachine VM, Value[] Args) => {
+                Machine.RegisterFunction("LT",  new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.COMPARABLE, ArgumentType.COMPARABLE}, (VirtualMachine VM, Value[] Args) => {
                             var c = cmp(Args[1], Args[2]);
 
                             Args[0].Register.Contents = c.lt;
                             }));
 
-                Machine.RegisterFunction("LTE", new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.INT | ArgumentType.DOUBLE | ArgumentType.STRING, ArgumentType.INT | ArgumentType.DOUBLE | ArgumentType.STRING}, (VirtualMachine VM, Value[] Args) => {
+                Machine.RegisterFunction("LTE",  new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.COMPARABLE, ArgumentType.COMPARABLE}, (VirtualMachine VM, Value[] Args) => {
                             var c = cmp(Args[1], Args[2]);
 
                             Args[0].Register.Contents = c.lt || c.eq;
                             }));
 
-                Machine.RegisterFunction("EQ", new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.BOOL | ArgumentType.INT | ArgumentType.DOUBLE | ArgumentType.STRING, ArgumentType.BOOL | ArgumentType.INT | ArgumentType.DOUBLE | ArgumentType.STRING}, (VirtualMachine VM, Value[] Args) => {
+                Machine.RegisterFunction("EQ", new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.EQUATABLE, ArgumentType.EQUATABLE}, (VirtualMachine VM, Value[] Args) => {
                             var c = cmp(Args[1], Args[2]);
 
                             Args[0].Register.Contents = c.eq;
                             }));
 
-                Machine.RegisterFunction("NEQ", new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.BOOL | ArgumentType.INT | ArgumentType.DOUBLE | ArgumentType.STRING, ArgumentType.BOOL | ArgumentType.INT | ArgumentType.DOUBLE | ArgumentType.STRING}, (VirtualMachine VM, Value[] Args) => {
+                Machine.RegisterFunction("NEQ", new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.EQUATABLE, ArgumentType.EQUATABLE}, (VirtualMachine VM, Value[] Args) => {
                             var c = cmp(Args[1], Args[2]);
 
                             Args[0].Register.Contents = ! c.eq;

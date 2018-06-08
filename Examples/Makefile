@@ -1,4 +1,4 @@
-.PHONY: clean
+.PHONY: clean all
 
 all: Counter.exe HelloWorld.exe
 	cp ../SillyVM/SillyVM.dll .

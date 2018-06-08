@@ -19,7 +19,12 @@ namespace SillyVM
             REGISTER = 256,
             FUNCTION = 512,
             INSTRUCTION = 1024,
+
             ANY = 2048,
+            
+            NUMERIC = 6,
+            COMPARABLE = 15,
+            EQUATABLE = 143,
         }
 
     public class Function

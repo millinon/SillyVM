@@ -25,6 +25,7 @@ namespace Driver
                 loop,
                 new Instruction("INC", VM.Registers["ACC"]),
                 new Instruction("LT", VM.Registers["R0"], VM.Registers["ACC"], 10),
+                new Instruction("SLEEP", 500),
                 new Instruction("JUMPIF", VM.Registers["R0"], loop),
                 new Instruction("HALT"),
             };
