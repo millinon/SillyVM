@@ -1,13 +1,10 @@
 .PHONY: clean all
 
-all: Counter.exe HelloWorld.exe
+all: Counter.exe HelloWorld.exe Subroutine.exe
 	cp ../SillyVM/SillyVM.dll .
 
-Counter.exe: Counter.cs ../SillyVM/SillyVM.dll
-	mcs -out:Counter.exe Counter.cs -r:../SillyVM/SillyVM.dll
-
-HelloWorld.exe: HelloWorld.cs ../SillyVM/SillyVM.dll
-	mcs -out:HelloWorld.exe HelloWorld.cs -r:../SillyVM/SillyVM.dll
+%.exe: %.cs ../SillyVM/SillyVM.dll
+	mcs -out:$@ $< -r:../SillyVM/SillyVM.dll
 
 clean:
-	rm -f *.exe
+	rm -f *.exe SillyVM.dll

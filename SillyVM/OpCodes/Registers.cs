@@ -24,14 +24,14 @@ namespace SillyVM
                         {
                         var regname = Args[0].String;
                         if(VM.Registers.Keys.Contains(regname)) throw new InvalidOperationException();
-                        VM._registers[regname] = new Register(regname);
+                        VM._registers[regname] = new Register(regname, VM);
                         }));
 
                 Machine.RegisterFunction("ADDCONST",  new Function(new ArgumentType[] { ArgumentType.STRING, ArgumentType.ANY }, (VirtualMachine VM, Value[] Args) => 
                         {
                         var regname = Args[0].String;
                         if(VM.Registers.Keys.Contains(regname)) throw new InvalidOperationException();
-                        VM._registers[regname] = new Register(regname, Args[1]);
+                        VM._registers[regname] = new Register(regname, Args[1], VM);
                         }));
             }
         }

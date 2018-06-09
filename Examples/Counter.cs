@@ -15,18 +15,18 @@ namespace Driver
         {
             VirtualMachine VM = new VirtualMachine(); 
 
-            VM.AddRegister("R0");
-            VM.AddRegister("ACC");
+            var r0 = VM.AddRegister("R0");
+            var acc = VM.AddRegister("ACC");
             
-            var loop = new Instruction("PRINT", VM.Registers["ACC"]);
+            Instruction loop;
                 
             var Program = new List<Instruction>(){
-                new Instruction("LOAD", VM.Registers["ACC"], 0),
-                loop,
-                new Instruction("INC", VM.Registers["ACC"]),
-                new Instruction("LT", VM.Registers["R0"], VM.Registers["ACC"], 10),
+                new Instruction("LOAD", acc, 0),
+        (loop = new Instruction("PRINT", acc)),
+                new Instruction("INC", acc),
+                new Instruction("LT", r0, acc, 10),
                 new Instruction("SLEEP", 500),
-                new Instruction("JUMPIF", VM.Registers["R0"], loop),
+                new Instruction("JUMPIF", r0, loop),
                 new Instruction("HALT"),
             };
 

@@ -51,7 +51,7 @@ namespace SillyVM
             ArgumentTypes = (ArgumentType[])Args.Clone();
         }
 
-        public Function(ArgumentType[] Args, List<Instruction> Procedure) : this(Args)
+        public Function(List<Instruction> Procedure) : this(new ArgumentType[]{})
         {
             this.Procedure = new List<Instruction>(Procedure);
             IsNative = false;
@@ -72,7 +72,7 @@ namespace SillyVM
                 this.NativeProcedure.Invoke(VM, validated);
             } else
             {
-
+                VM.Execute(Procedure[0]);
             }
         }
 

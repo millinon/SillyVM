@@ -5,14 +5,16 @@ namespace SillyVM
 {
     public class Assembler
     {
-        public static void Link(List<Instruction> Program)
+        public static List<Instruction> Link(List<Instruction> Routine)
         {
-            for(int i = 0; i < Program.Count-1; i++)
+            for(int i = 0; i < Routine.Count-1; i++)
             {
-                var inst = Program[i];
+                var inst = Routine[i];
 
-                if(inst.Next == null) inst.Next = Program[i+1];
+                if(inst.Next == null) inst.Next = Routine[i+1];
             }
+
+            return Routine;
         }
     }
 }
