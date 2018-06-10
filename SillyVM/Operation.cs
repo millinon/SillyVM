@@ -9,22 +9,24 @@ namespace SillyVM
         {
             VOID = 0,
             BOOL = 1,
-            INT = 2,
-            DOUBLE = 4,
-            STRING = 8,
-            VECTOR = 16,
-            DICTIONARY = 32,
-            REFERENCE = 64,
-            TYPE = 128,
-            REGISTER = 256,
-            FUNCTION = 512,
-            INSTRUCTION = 1024,
+            CHAR = 2,
+            INT = 4,
+            DOUBLE = 8,
+            STRING = 16,
+            VECTOR = 32,
+            DICTIONARY = 64,
+            REFERENCE = 128,
+            TYPE = 256,
+            REGISTER = 512,
+            FUNCTION = 1024,
+            INSTRUCTION = 2048,
 
-            ANY = 2048,
+            ANY = 4095,
             
-            NUMERIC = 6,
-            COMPARABLE = 15,
-            EQUATABLE = 143,
+            NUMERIC = 2+4+8,
+            COMPARABLE = 1+2+4+8+16,
+            CONVERTIBLE = 1+2+4+8+16+32+64+256,
+            EQUATABLE = 1+2+4+8+16+256,
         }
 
     public class Operation

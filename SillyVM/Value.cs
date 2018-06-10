@@ -8,6 +8,7 @@ namespace SillyVM
     {
         VOID,
         BOOL,
+        CHAR,
         INT,
         DOUBLE,
         STRING,
@@ -44,6 +45,16 @@ namespace SillyVM
             }
         }
 
+        private readonly char _charval;
+        public char Char
+        {
+            get
+            {
+                if (ValueType == ValueType.CHAR) return _charval;
+                else throw new InvalidOperationException();
+            }
+        }
+
         private readonly double _doubleval;
         public double Double
         {
@@ -74,8 +85,8 @@ namespace SillyVM
             }
         }
 
-        private readonly Dictionary<Value, Value> _dictionaryval;
-        public Dictionary<Value, Value> Dictionary
+        private readonly Dictionary<string, Value> _dictionaryval;
+        public Dictionary<string, Value> Dictionary
         {
             get
             {
@@ -134,9 +145,6 @@ namespace SillyVM
             }
         }
 
-
-
-
         public Value()
         {
             ValueType = ValueType.VOID;
@@ -151,6 +159,17 @@ namespace SillyVM
         public static implicit operator Value(bool BoolValue)
         {
             return new Value(BoolValue);
+        }
+
+        public Value(char CharValue)
+        {
+            ValueType = ValueType.CHAR;
+            _charval = CharValue;
+        }
+
+        public static implicit operator Value(char CharValue)
+        {
+            return new Value(CharValue);
         }
 
         public Value(int IntValue)
@@ -197,13 +216,13 @@ namespace SillyVM
             return new Value(VectorValue);
         }
 
-        public Value(Dictionary<Value, Value> DictionaryValue)
+        public Value(Dictionary<string, Value> DictionaryValue)
         {
             ValueType = ValueType.DICTIONARY;
             _dictionaryval = DictionaryValue;
         }
 
-        public static implicit operator Value(Dictionary<Value, Value> DictionaryValue)
+        public static implicit operator Value(Dictionary<string, Value> DictionaryValue)
         {
             return new Value(DictionaryValue);
         }
@@ -273,6 +292,9 @@ namespace SillyVM
                 case ValueType.BOOL:
                     return _boolval.GetHashCode();
 
+                case ValueType.CHAR:
+                    return _charval.GetHashCode();
+
                 case ValueType.INT:
                     return _intval.GetHashCode();
 
@@ -322,6 +344,9 @@ namespace SillyVM
 
                 case ValueType.BOOL:
                     return $"{typeval} {_boolval}";
+        
+                case ValueType.CHAR:
+                    return $"{typeval} {_charval}";
 
                 case ValueType.INT:
                     return $"{typeval} {_intval}";
@@ -348,9 +373,9 @@ namespace SillyVM
                     var keys = _dictionaryval.Keys;
 
                     i = 0;
-                    foreach(var key in _dictionaryval.Keys)
+                    foreach(var key in keys)
                     {
-                        str += key.ToString() + ":" + _dictionaryval[key].ToString();
+                        str += '"' + key + '"' + ":" + _dictionaryval[key].ToString();
                         if (i++ < keys.Count) str += ",";
                     }
                     str += "}";

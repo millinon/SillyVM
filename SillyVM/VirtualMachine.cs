@@ -120,9 +120,11 @@ namespace SillyVM
         private void RegisterNatives()
         {
             OpCodes.Comparison.Register(this);
+            OpCodes.Conversion.Register(this);
             OpCodes.Math.Register(this);
             OpCodes.Registers.Register(this);
             OpCodes.Stack.Register(this);
+            OpCodes.Types.Register(this);
             OpCodes.Util.Register(this);
         }
     }

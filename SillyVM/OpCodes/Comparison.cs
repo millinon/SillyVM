@@ -24,11 +24,39 @@ namespace SillyVM
                                          if(B.ValueType != ValueType.BOOL) throw new InvalidOperationException();
                                          else return new cmp_result {
                                              gt = A.Bool && !B.Bool,
-                                                lt = B.Bool && !A.Bool,
+                                                lt = !A.Bool && B.Bool,
                                                 eq = A.Bool == B.Bool,
                                          };
+                    case ValueType.CHAR:
+                                         switch(B.ValueType){
+                                            case ValueType.CHAR:
+                                                return new cmp_result {
+                                                    gt = A.Char > B.Char,
+                                                       lt = A.Char < B.Char,
+                                                       eq = A.Char == B.Char
+                                                };
+                                            case ValueType.INT:
+                                                return new cmp_result {
+                                                    gt = A.Char > B.Int,
+                                                        lt = A.Char < B.Int,
+                                                        eq = A.Char == B.Int,
+                                                };
+                                            case ValueType.DOUBLE:
+                                                return new cmp_result {
+                                                    gt = A.Char > B.Double,
+                                                       lt = A.Char < B.Double,
+                                                       eq = A.Char == B.Double
+                                                };
+                                            default: throw new InvalidOperationException();
+                                         }
                     case ValueType.INT:
                                          switch(B.ValueType){
+                                             case ValueType.CHAR:
+                                                 return new cmp_result {
+                                                     gt = A.Int > B.Char,
+                                                        lt = A.Int < B.Char,
+                                                        eq = A.Int == B.Char,
+                                                 };
                                              case ValueType.INT:
                                                  return new cmp_result {
                                                      gt = A.Int > B.Int,
@@ -45,6 +73,12 @@ namespace SillyVM
                                          }
                     case ValueType.DOUBLE:
                                          switch(B.ValueType){
+                                             case ValueType.CHAR:
+                                                 return new cmp_result {
+                                                    gt = A.Double > B.Char,
+                                                       lt = A.Double < B.Char,
+                                                       eq = A.Double == B.Char,
+                                                 };
                                              case ValueType.INT:
                                                  return new cmp_result {
                                                      gt = A.Double > B.Int,
@@ -67,43 +101,52 @@ namespace SillyVM
                                                 lt = c < 0,
                                                 eq = c == 0,
                                          };
+
+                    case ValueType.TYPE:
+                                        if(B.ValueType != ValueType.TYPE) throw new InvalidOperationException();
+                                        return new cmp_result {
+                                            gt = false,
+                                               lt = false,
+                                               eq = A.Type == B.Type,
+                                        };
+
                     default: throw new InvalidOperationException();
                 }
             }
 
             public static void Register(VirtualMachine Machine)
             {
-                Machine.RegisterOperation("GT",  new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.COMPARABLE, ArgumentType.COMPARABLE}, (VirtualMachine VM, Value[] Args) => {
+                Machine.RegisterOperation("GT",  new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.COMPARABLE, ArgumentType.COMPARABLE}, (VM, Args) => {
                             var c = cmp(Args[1], Args[2]);
 
                             Args[0].Register.Contents = c.gt;
                             }));
 
-                Machine.RegisterOperation("GTE",  new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.COMPARABLE, ArgumentType.COMPARABLE}, (VirtualMachine VM, Value[] Args) => {
+                Machine.RegisterOperation("GTE",  new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.COMPARABLE, ArgumentType.COMPARABLE}, (VM, Args) => {
                             var c = cmp(Args[1], Args[2]);
 
                             Args[0].Register.Contents = c.gt || c.eq;
                             }));
 
-                Machine.RegisterOperation("LT",  new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.COMPARABLE, ArgumentType.COMPARABLE}, (VirtualMachine VM, Value[] Args) => {
+                Machine.RegisterOperation("LT",  new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.COMPARABLE, ArgumentType.COMPARABLE}, (VM, Args) => {
                             var c = cmp(Args[1], Args[2]);
 
                             Args[0].Register.Contents = c.lt;
                             }));
 
-                Machine.RegisterOperation("LTE",  new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.COMPARABLE, ArgumentType.COMPARABLE}, (VirtualMachine VM, Value[] Args) => {
+                Machine.RegisterOperation("LTE",  new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.COMPARABLE, ArgumentType.COMPARABLE}, (VM, Args) => {
                             var c = cmp(Args[1], Args[2]);
 
                             Args[0].Register.Contents = c.lt || c.eq;
                             }));
 
-                Machine.RegisterOperation("EQ", new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.EQUATABLE, ArgumentType.EQUATABLE}, (VirtualMachine VM, Value[] Args) => {
+                Machine.RegisterOperation("EQ", new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.EQUATABLE, ArgumentType.EQUATABLE}, (VM, Args) => {
                             var c = cmp(Args[1], Args[2]);
 
                             Args[0].Register.Contents = c.eq;
                             }));
 
-                Machine.RegisterOperation("NEQ", new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.EQUATABLE, ArgumentType.EQUATABLE}, (VirtualMachine VM, Value[] Args) => {
+                Machine.RegisterOperation("NEQ", new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.EQUATABLE, ArgumentType.EQUATABLE}, (VM, Args) => {
                             var c = cmp(Args[1], Args[2]);
 
                             Args[0].Register.Contents = ! c.eq;

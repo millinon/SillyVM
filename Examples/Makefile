@@ -1,6 +1,6 @@
 .PHONY: clean all
 
-all: Counter.exe HelloWorld.exe Subroutine.exe
+all: Counter.exe HelloWorld.exe Subroutine.exe Conversion.exe
 	cp ../SillyVM/SillyVM.dll .
 
 %.exe: %.cs ../SillyVM/SillyVM.dll
