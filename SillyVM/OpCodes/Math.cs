@@ -77,7 +77,7 @@ namespace SillyVM
 
             public static void Register(VirtualMachine Machine)
             {
-                Machine.RegisterFunction("INC", new Function(new ArgumentType[] { ArgumentType.REGISTER }, (VirtualMachine VM, Value[] Args) =>
+                Machine.RegisterOperation("INC", new Operation(new ArgumentType[] { ArgumentType.REGISTER }, (VirtualMachine VM, Value[] Args) =>
                         {
                         var reg = Args[0].Register;
 
@@ -96,7 +96,7 @@ namespace SillyVM
                         }
                         }));
 
-                Machine.RegisterFunction("DEC", new Function(new ArgumentType[] { ArgumentType.REGISTER }, (VirtualMachine VM, Value[] Args) =>
+                Machine.RegisterOperation("DEC", new Operation(new ArgumentType[] { ArgumentType.REGISTER }, (VirtualMachine VM, Value[] Args) =>
                             {
                         var reg = Args[0].Register;
 
@@ -115,22 +115,22 @@ namespace SillyVM
                         }
                             }));
 
-                Machine.RegisterFunction("ADD", new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.NUMERIC, ArgumentType.NUMERIC }, (VirtualMachine VM, Value[] Args) =>
+                Machine.RegisterOperation("ADD", new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.NUMERIC, ArgumentType.NUMERIC }, (VirtualMachine VM, Value[] Args) =>
                             {
                             Args[0].Register.Contents = Op(Args[1], Args[2], op.ADD);
                             }));
 
-                Machine.RegisterFunction("SUB", new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.NUMERIC, ArgumentType.NUMERIC }, (VirtualMachine VM, Value[] Args) =>
+                Machine.RegisterOperation("SUB", new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.NUMERIC, ArgumentType.NUMERIC }, (VirtualMachine VM, Value[] Args) =>
                             {
                             Args[0].Register.Contents = Op(Args[1], Args[2], op.SUB);
                             }));
 
-                Machine.RegisterFunction("MUL", new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.NUMERIC, ArgumentType.NUMERIC }, (VirtualMachine VM, Value[] Args) =>
+                Machine.RegisterOperation("MUL", new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.NUMERIC, ArgumentType.NUMERIC }, (VirtualMachine VM, Value[] Args) =>
                             {
                             Args[0].Register.Contents = Op(Args[1], Args[2], op.MUL);
                             }));
 
-                Machine.RegisterFunction("DIV", new Function(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.NUMERIC, ArgumentType.NUMERIC }, (VirtualMachine VM, Value[] Args) =>
+                Machine.RegisterOperation("DIV", new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.NUMERIC, ArgumentType.NUMERIC }, (VirtualMachine VM, Value[] Args) =>
                             {
                             Args[0].Register.Contents = Op(Args[1], Args[2], op.DIV);
                             }));

@@ -15,23 +15,21 @@ namespace Driver
         {
             VirtualMachine VM = new VirtualMachine(); 
 
-            VM.AddRegister("R0");
+            var r0 = VM.AddRegister("R0");
 
             var subroutine = new List<Instruction>(){
                 new Instruction("PRINT", "(hello from subroutine)"),
-                    new Instruction("PRINT", VM.Registers["R0"]),
+                    new Instruction("PRINT", r0),
                     new Instruction("PRINT", "(goodbye from subroutine)"),
             };
 
-            Assembler.Link(subroutine);
-
-            VM.RegisterFunction("MYFUNC", new Function(subroutine));
+            var func = new Function(Assembler.Link(subroutine));
 
             var Program = new List<Instruction>(){
-                new Instruction("LOAD", VM.Registers["R0"], "Hello, world!"),
+                new Instruction("LOAD", r0, "Hello, world!"),
                     new Instruction("PRINT", "(calling subroutine)"),
-                    new Instruction("MYFUNC"),
-                    new Instruction("PRINT","(subroutine done)"),
+                    new Instruction("CALL", func),
+                    new Instruction("PRINT", "(subroutine done)"),
                     new Instruction("HALT"),
             };
 

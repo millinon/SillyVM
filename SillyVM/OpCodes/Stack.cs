@@ -10,17 +10,17 @@ namespace SillyVM
         {
             public static void Register(VirtualMachine Machine)
             {
-                Machine.RegisterFunction("PUSH", new Function(new ArgumentType[] { ArgumentType.ANY }, (VirtualMachine VM, Value[] Args) =>
+                Machine.RegisterOperation("PUSH", new Operation(new ArgumentType[] { ArgumentType.ANY }, (VirtualMachine VM, Value[] Args) =>
                         {
                         VM.Stack.Push(Args[0]);
                         }));
 
-                Machine.RegisterFunction("POP", new Function(new ArgumentType[] { ArgumentType.REGISTER }, (VirtualMachine VM, Value[] Args) =>
+                Machine.RegisterOperation("POP", new Operation(new ArgumentType[] { ArgumentType.REGISTER }, (VirtualMachine VM, Value[] Args) =>
                         {
                         Args[0].Register.Contents = VM.Stack.Pop();
                         }));
 
-                Machine.RegisterFunction("STACKSIZE", new Function(new ArgumentType[] { ArgumentType.REGISTER }, (VirtualMachine VM, Value[] Args) =>
+                Machine.RegisterOperation("STACKSIZE", new Operation(new ArgumentType[] { ArgumentType.REGISTER }, (VirtualMachine VM, Value[] Args) =>
                         {
                         Args[0].Register.Contents = new Value(VM.Stack.Count);
                         }));

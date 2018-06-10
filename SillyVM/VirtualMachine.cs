@@ -33,12 +33,12 @@ namespace SillyVM
 
         internal readonly Stack<Value> Stack;
 
-        private Dictionary<string, Function> Functions;
+        private Dictionary<string, Operation> Operations;
 
         public VirtualMachine()
         {
             Stack = new Stack<Value>();
-            Functions = new Dictionary<string, Function>();
+            Operations = new Dictionary<string, Operation>();
             Program = new List<Instruction>();
             _registers = new Dictionary<string, Register>();
             CallStack = new Stack<Instruction>();
@@ -46,26 +46,17 @@ namespace SillyVM
             Reset();
         }
 
-        private void Invoke(Function Func, params Value[] Parameters)
+        private void Execute(Instruction Instruction)
         {
-            Func.ValidateArguments(Parameters);
-
-            Func.Invoke(this, Parameters);
-        }
-
-        internal void Execute(Instruction Instruction)
-        {
-            var func = Functions[Instruction.OpCode];
+            var op = Operations[Instruction.OpCode];
             
-            if(! func.IsNative && PC.Next != null) CallStack.Push(PC.Next);
+            PC = Instruction.Next;
 
-            PC = null;
-
-            Invoke(func, Instruction.Arguments);
+            op.Invoke(this, Instruction.Arguments);
 
             if (!IsHalted && PC == null) {
-                if(Instruction.Next != null) PC = Instruction.Next;
-                else if(CallStack.Count > 0) PC = CallStack.Pop();
+                //if(Instruction.Next != null) PC = Instruction.Next;
+                if(CallStack.Count > 0) PC = CallStack.Pop();
                 else throw new InvalidOperationException();
             }
         }
@@ -90,7 +81,7 @@ namespace SillyVM
 
         public void Reset()
         {
-            Functions.Clear();
+            Operations.Clear();
             RegisterNatives();
 
             _registers.Clear();
@@ -119,11 +110,11 @@ namespace SillyVM
             this.PC = this.Program[0];
         }
 
-        public void RegisterFunction(string OpCode, Function Function)
+        internal void RegisterOperation(string OpCode, Operation Op)
         {
-            if(Functions.Keys.Contains(OpCode)) throw new InvalidOperationException();
+            if(Operations.Keys.Contains(OpCode)) throw new InvalidOperationException();
 
-            Functions[OpCode] = Function;
+            Operations[OpCode] = Op;
         }
 
         private void RegisterNatives()
