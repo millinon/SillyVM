@@ -48,6 +48,8 @@ namespace SillyVM
 
         private void Execute(Instruction Instruction)
         {
+            if(! Operations.ContainsKey(Instruction.OpCode)) throw new InvalidOperationException("OpCode " + Instruction.OpCode + " not found");
+
             var op = Operations[Instruction.OpCode];
             
             PC = Instruction.Next;
@@ -126,6 +128,7 @@ namespace SillyVM
             OpCodes.Stack.Register(this);
             OpCodes.Types.Register(this);
             OpCodes.Util.Register(this);
+            OpCodes.Vector.Register(this);
         }
     }
 }
