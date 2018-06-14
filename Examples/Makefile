@@ -1,10 +1,12 @@
 .PHONY: clean all
 
-all: Counter.exe HelloWorld.exe Subroutine.exe ConsoleColors.exe Conversion.exe Vector.exe
-	cp ../SillyVM/SillyVM.dll .
+TARGETS=Counter HelloWorld Subroutine ConsoleColors Conversion Vector
 
-%.exe: %.cs ../SillyVM/SillyVM.dll
-	mcs -debug -out:$@ $(patsubst %.exe,%,$<)/$< -r:../SillyVM/SillyVM.dll
+all: $(foreach target,$(TARGETS),$(target).exe)
+        cp ../SillyVM/SillyVM.dll .
+
+%.exe: %/%.cs ../SillyVM/SillyVM.dll
+        mcs -debug -out:$@ $< -r:../SillyVM/SillyVM.dll
 
 clean:
-	rm -f *.exe *.mdb SillyVM.dll
+        rm -f *.exe *.dll *.mdb
