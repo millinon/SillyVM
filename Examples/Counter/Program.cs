@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using SillyVM;
 
@@ -18,7 +19,7 @@ namespace Driver
             var Program = new List<Instruction>(){
                 new Instruction("LOAD", acc, 0),
         (loop = new Instruction("DUMP", r0, acc)),
-                new Instruction("PRINT", r0),
+                new Instruction("CONWRITELN", r0),
                 new Instruction("INC", acc),
                 new Instruction("LT", r0, acc, 10),
                 new Instruction("SLEEP", 500),

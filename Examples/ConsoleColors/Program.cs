@@ -23,7 +23,7 @@ namespace Driver
             Instruction loop1, loop2;
 
             var Program = new List<Instruction>(){
-                new Instruction("LOAD", cols, ((ConsoleColor[])Enum.GetValues(typeof(ConsoleColor))).Select(obj => new Value((int)obj)).ToList()),
+                new Instruction("LOAD", cols, ((ConsoleColor[])Enum.GetValues(typeof(ConsoleColor))).Select(color => new Value((int)color)).ToList()),
                     new Instruction("LEN", numcols, cols),
                     new Instruction("LOAD", x, 0),
                     new Instruction("LOAD", y, 0),

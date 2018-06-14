@@ -1,11 +1,5 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-
-namespace SillyVM
+namespace SillyVM.OpCodes
 {
-    namespace OpCodes
-    {
         public class Stack
         {
             public static void Register(VirtualMachine Machine)
@@ -28,4 +22,3 @@ namespace SillyVM
             }
         }
     }
-}

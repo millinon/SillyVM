@@ -6,14 +6,14 @@ namespace SillyVM
 {
     public class VirtualMachine
     {
-        private readonly List<Instruction> Program;
+        internal List<Instruction> Program;
         internal readonly Stack<Instruction> CallStack;
 
         internal readonly Dictionary<string, Register> _registers;
         public IReadOnlyDictionary<string, Register> Registers
         {
             get {
-             return (IReadOnlyDictionary<string, Register>) _registers;   
+             return _registers;   
             }
         }
         
@@ -48,16 +48,17 @@ namespace SillyVM
 
         private void Execute(Instruction Instruction)
         {
-            if(! Operations.ContainsKey(Instruction.OpCode)) throw new InvalidOperationException("OpCode " + Instruction.OpCode + " not found");
+            var opcode = Instruction.OpCode.ToLower();
 
-            var op = Operations[Instruction.OpCode];
+            if(! Operations.ContainsKey(opcode)) throw new InvalidOperationException("OpCode " + Instruction.OpCode + " not found");
+
+            var op = Operations[opcode];
             
             PC = Instruction.Next;
 
             op.Invoke(this, Instruction.Arguments);
 
             if (!IsHalted && PC == null) {
-                //if(Instruction.Next != null) PC = Instruction.Next;
                 if(CallStack.Count > 0) PC = CallStack.Pop();
                 else throw new InvalidOperationException();
             }
@@ -83,12 +84,15 @@ namespace SillyVM
 
         public void Reset()
         {
+            Stack.Clear();
+
             Operations.Clear();
             RegisterNatives();
 
             _registers.Clear();
-
             CallStack.Clear();
+
+            Program = null;
 
             PC = null;
 
@@ -102,21 +106,18 @@ namespace SillyVM
 
         public void Load(List<Instruction> Program)
         {
-            this.Program.Clear();
-
-            foreach(var inst in Program)
-            {
-                this.Program.Add(inst);
-            }
+            this.Program = new List<Instruction>(Program);
 
             this.PC = this.Program[0];
         }
 
         internal void RegisterOperation(string OpCode, Operation Op)
         {
-            if(Operations.Keys.Contains(OpCode)) throw new InvalidOperationException();
+            var opcode = OpCode.ToLower();
 
-            Operations[OpCode] = Op;
+            if(Operations.Keys.Contains(opcode)) throw new InvalidOperationException();
+
+            Operations[opcode] = Op;
         }
 
         private void RegisterNatives()
@@ -124,6 +125,7 @@ namespace SillyVM
             OpCodes.Comparison.Register(this);
             OpCodes.Console.Register(this);
             OpCodes.Conversion.Register(this);
+            OpCodes.Logic.Register(this);
             OpCodes.Math.Register(this);
             OpCodes.Registers.Register(this);
             OpCodes.Stack.Register(this);

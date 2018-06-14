@@ -46,6 +46,7 @@
     <Compile Include="OpCodes\Comparison.cs" />
     <Compile Include="OpCodes\Console.cs" />
     <Compile Include="OpCodes\Conversion.cs" />
+    <Compile Include="OpCodes\Logic.cs" />
     <Compile Include="OpCodes\Math.cs" />
     <Compile Include="OpCodes\Registers.cs" />
     <Compile Include="OpCodes\Stack.cs" />
