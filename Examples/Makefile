@@ -3,10 +3,10 @@
 TARGETS=Counter HelloWorld Subroutine ConsoleColors Conversion Vector
 
 all: $(foreach target,$(TARGETS),$(target).exe)
-        cp ../SillyVM/SillyVM.dll .
+	cp ../SillyVM/SillyVM.dll .
 
-%.exe: %/%.cs ../SillyVM/SillyVM.dll
-        mcs -debug -out:$@ $< -r:../SillyVM/SillyVM.dll
+%.exe: %/Program.cs ../SillyVM/SillyVM.dll
+	mcs -debug -out:$@ $< -r:../SillyVM/SillyVM.dll
 
 clean:
-        rm -f *.exe *.dll *.mdb
+	rm -f *.exe *.dll *.mdb
