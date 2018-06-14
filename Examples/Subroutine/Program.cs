@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 using SillyVM;
-using static SillyVM.VirtualMachine;
 
 namespace Driver
 {
@@ -13,7 +8,7 @@ namespace Driver
     {
         static void Main(string[] args)
         {
-            VirtualMachine VM = new VirtualMachine(); 
+            VirtualMachine VM = new VirtualMachine();
 
             var r0 = VM.AddRegister("R0");
 
