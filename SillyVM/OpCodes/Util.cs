@@ -26,16 +26,15 @@ namespace SillyVM
                             if (Args[0].Bool) VM.PC = Args[1].Instruction;
                             }));
 
-                Machine.RegisterOperation("PRINT", new Operation(new ArgumentType[] { ArgumentType.ANY }, (VM, Args) =>
+                Machine.RegisterOperation("DUMP", new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.ANY }, (VM, Args) =>
                             {
-                            Console.WriteLine(Args[0].ToString());
+                            Args[0].Register.Contents = Args[1].ToString();
                             }));
 
                 Machine.RegisterOperation("SLEEP", new Operation(new ArgumentType[] { ArgumentType.INT }, (VM, Args) =>
                             {
                             Thread.Sleep(Args[0].Int);
                             }));
-
 
                 Machine.RegisterOperation("HALT", new Operation(new ArgumentType[] { }, (VM, Args) =>
                             {

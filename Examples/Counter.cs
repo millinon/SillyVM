@@ -22,7 +22,8 @@ namespace Driver
                 
             var Program = new List<Instruction>(){
                 new Instruction("LOAD", acc, 0),
-        (loop = new Instruction("PRINT", acc)),
+        (loop = new Instruction("DUMP", r0, acc)),
+                new Instruction("PRINT", r0),
                 new Instruction("INC", acc),
                 new Instruction("LT", r0, acc, 10),
                 new Instruction("SLEEP", 500),

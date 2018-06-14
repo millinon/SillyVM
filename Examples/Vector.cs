@@ -31,7 +31,7 @@ namespace Driver
                     new Instruction("APPEND", r0, r0, "loop!"),
                     new Instruction("LOAD", acc, 0),
             (loop = new Instruction("LOOKUP", r1, r0, acc)),
-                    new Instruction("PRINT", r1),
+                    new Instruction("CONWRITELN", r1),
                     new Instruction("INC", acc),
                     new Instruction("LEN", r1, r0),
                     new Instruction("LT", r1, acc, r1),

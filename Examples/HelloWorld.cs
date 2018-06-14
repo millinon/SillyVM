@@ -16,7 +16,7 @@ namespace Driver
             VirtualMachine VM = new VirtualMachine(); 
 
             var Program = new List<Instruction>(){
-                new Instruction("PRINT", "Hello, world!"),
+                new Instruction("CONWRITELN", "Hello, world!"),
                 new Instruction("HALT"),
             };
 

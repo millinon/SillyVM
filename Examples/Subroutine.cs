@@ -18,18 +18,18 @@ namespace Driver
             var r0 = VM.AddRegister("R0");
 
             var subroutine = new List<Instruction>(){
-                new Instruction("PRINT", "(hello from subroutine)"),
-                    new Instruction("PRINT", r0),
-                    new Instruction("PRINT", "(goodbye from subroutine)"),
+                new Instruction("CONWRITELN", "(hello from subroutine)"),
+                    new Instruction("CONWRITELN", r0),
+                    new Instruction("CONWRITELN", "(goodbye from subroutine)"),
             };
 
             var func = new Function(Assembler.Link(subroutine));
 
             var Program = new List<Instruction>(){
                 new Instruction("LOAD", r0, "Hello, world!"),
-                    new Instruction("PRINT", "(calling subroutine)"),
+                    new Instruction("CONWRITELN", "(calling subroutine)"),
                     new Instruction("CALL", func),
-                    new Instruction("PRINT", "(subroutine done)"),
+                    new Instruction("CONWRITELN", "(subroutine done)"),
                     new Instruction("HALT"),
             };
 
