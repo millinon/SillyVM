@@ -54,7 +54,7 @@ namespace SillyVM
 
                 Machine.RegisterOperation("LINK", new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.VECTOR }, (VM, Args) =>
                             {
-                            Args[0].Register.Contents = Assembler.Link(Args[1].Vector.Select(val => val.Instruction).ToList()).Select(inst => new Value(inst)).ToList();
+                            Args[0].Register.Contents = new Function(Assembler.Link(Args[1].Vector.Select(val => val.Instruction).ToList()));
                             }));
             }
         }
