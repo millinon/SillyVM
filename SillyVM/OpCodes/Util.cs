@@ -49,7 +49,7 @@ namespace SillyVM
 
                 Machine.RegisterOperation("MKINST", new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.STRING, ArgumentType.VECTOR }, (VM, Args) => 
                             {
-                            Args[0].Register.Contents = new Instruction(Args[1].String, Args[2].Vector);
+                            Args[0].Register.Contents = new Instruction(Args[1].String, Args[2].Vector.ToArray());
                             }));
 
                 Machine.RegisterOperation("LINK", new Operation(new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.VECTOR }, (VM, Args) =>
